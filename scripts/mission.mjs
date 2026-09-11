@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
+import { realpathSync } from 'node:fs';
 import { mkdir, readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { arch, platform, totalmem } from 'node:os';
@@ -233,7 +234,17 @@ export async function main(argv = process.argv.slice(2)) {
     hardwareActuation: false, deployment: 'blocked' };
 }
 
-if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
+// macOS resolves /tmp through /private/tmp when loading an ES module. Comparing
+// raw file URLs makes a copied fresh-checkout script silently skip main().
+const isEntrypoint = process.argv[1] && (() => {
+  try {
+    return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
+})();
+
+if (isEntrypoint) {
   main().then((result) => {
     process.stdout.write(stableJson(result));
     if (result.verdict === 'REJECT') process.exitCode = 1;

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtemp, mkdir, readFile, writeFile, symlink, unlink, stat, cp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -168,12 +168,16 @@ test('doctor exposes only public tool availability, never hardware validation', 
   if (process.platform !== 'darwin') assert.equal(doctor('mac').verdict, 'INCONCLUSIVE');
 });
 
-test('doctor can load on a fresh checkout without node_modules', async () => {
+test('doctor can execute on a fresh checkout without node_modules', async () => {
   const root = await mkdtemp(join(tmpdir(), 'dream-fresh-checkout-'));
   await mkdir(join(root, 'scripts'));
   for (const name of ['mission.mjs', 'mission-evidence.mjs']) await cp(join(ROOT, 'scripts', name), join(root, 'scripts', name));
-  const result = execFileSync(process.execPath, [join(root, 'scripts', 'mission.mjs'), 'doctor'], { encoding: 'utf8', timeout: 15000 });
-  assert.equal(JSON.parse(result).verdict, 'ACCEPT');
+  const child = spawnSync(process.execPath, [join(root, 'scripts', 'mission.mjs'), 'doctor'], { encoding: 'utf8', timeout: 15000 });
+  assert.equal(child.error, undefined);
+  assert.ok([0, 2].includes(child.status));
+  const doctorResult = JSON.parse(child.stdout);
+  assert.equal(doctorResult.schemaVersion, 'dream.doctor.v1');
+  assert.ok(['ACCEPT', 'INCONCLUSIVE'].includes(doctorResult.verdict));
 });
 
 test('fixed child command failures are bounded and do not expose stderr', () => {

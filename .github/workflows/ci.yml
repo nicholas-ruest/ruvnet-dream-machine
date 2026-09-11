@@ -46,6 +46,15 @@ jobs:
         run: npm run check:edge-contracts
       - name: Prohibit exposed development test services
         run: npm run check:development-policy
+      - name: Install Rust toolchain
+        if: matrix.node == 22
+        run: rustup toolchain install stable --profile minimal
+      - name: Verify Rust counterfactual evidence core
+        if: matrix.node == 22
+        run: |
+          cargo fmt --check
+          cargo test --workspace
+          cargo clippy --workspace --all-targets -- -D warnings
       - name: CLI smoke test (proves the published bin works)
         run: |
           node packages/cli/dist/bin.js version

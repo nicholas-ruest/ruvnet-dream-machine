@@ -189,6 +189,25 @@ backends** — a night without any of them is a *degraded* night, not a failed o
 | [`@dream-machine/schedule`](packages/schedule) | the cloud `/schedule` routine body emitter |
 | [`@dream-machine/memory`](packages/memory) | deterministic flat-file memory; optional RuVector probe, real RVF adapter pending |
 
+### Rust counterfactual evidence core
+
+The advisory Counterfactual Evidence Memory proposed by the September 10 cycle
+is now implemented as a bounded Rust library in
+[`crates/dream-machine-core`](crates/dream-machine-core/). It freezes a
+prediction before evaluation, binds it to one matching independent outcome,
+records the mismatch and new guardrails, and provides deterministic bounded
+retrieval plus local snapshot persistence. Predictions and reconciliations have
+`authority: none`; only an independent successful evaluation can become
+**ready for human review**, never a merge.
+
+```bash
+cargo test --workspace
+```
+
+The [ADRs](docs/adrs/INDEX.md) and [DDD map](docs/ddd/README.md) define the
+implemented boundary. This is a Rust core alongside the published TypeScript
+CLI, not an unannounced replacement of the CLI or an RVF integration claim.
+
 ## Safety
 
 The Dream Machine runs autonomously, so its guarantees are enforced in code and
