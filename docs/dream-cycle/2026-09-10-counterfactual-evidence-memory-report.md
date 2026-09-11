@@ -10,6 +10,12 @@ implementations. It therefore cannot truthfully select a production winner.
 
 This draft is deliberately not a merge recommendation.
 
+## Publication
+
+- Draft PR: https://github.com/nicholas-ruest/ruvnet-dream-machine/pull/1
+- Public Dream Brief: https://gist.github.com/nicholas-ruest/670c6a922f381d7167d722b3b6bb133f
+- Issue tracker: disabled for this repository, so no dream-cycle issue could be created.
+
 ## Original context
 
 Dream Machine can preserve prior-night material through a bounded TypeScript
