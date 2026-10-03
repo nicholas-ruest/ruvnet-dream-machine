@@ -19,6 +19,11 @@ This is infrastructure recovery, not a nightly project deliverable.
   Its one generated unit test establishes toolchain execution only, not project quality.
 - Node 24.21.0 was installed in a user-scoped directory after checking the official
   archive SHA-256 `fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6`.
+- Pinned Darwin 0.10.3 and Flywheel 0.1.12 npm artifacts are installed under
+  `/home/ruv/.local/share/dream-machine/evaluators/node_modules`. Darwin CLI help
+  executed and Flywheel's run/replay/signer exports loaded on RuOS. Lockfile integrity
+  records bind registry artifacts; npm did not expose gitHead, so equivalence to the
+  separately inspected source revision is not claimed.
 - Private source access works through the connector; shell Git does not inherit its credentials.
 - The existing Chrome profile reached GitHub's sign-in page. Repository and Gist
   creation via that browser cannot proceed until the owner authenticates there.
@@ -89,6 +94,10 @@ Run `node --test scripts/factory-gate.test.mjs` to check the known failure modes
   typecheck, build, lint, edge-contract validation and development-policy checks.
   The first governance run required fetching full Git history for its pinned
   historical codec oracle; no tests or oracle revisions were changed.
+  GitHub's first repair CI passed build/test, CodeQL and software evidence; its audit
+  discovered existing brace-expansion 5.0.9 and fast-uri 3.1.7 vulnerabilities.
+  Compatible lockfile updates to 5.0.12 and 3.1.8 removed both; local npm audit reported
+  zero vulnerabilities. The remote rerun must be checked on the updated commit.
   These package tests are executor/dependency checks, not candidate improvement evidence.
 - Microsoft run-assert-eval, September 24, 2026:
   https://commandline.microsoft.com/run-assert-eval-responsible-ai-agent-risk-discovery-at-runtime/.
