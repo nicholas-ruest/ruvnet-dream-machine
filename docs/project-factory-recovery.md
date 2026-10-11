@@ -28,9 +28,12 @@ Exit 0 means STRUCTURAL_PASS_REQUIRES_EVIDENCE_REVIEW, never BUILT.
 
 The gate checks 25 ADR documents, 12 DDD documents, basic document sections and
 duplicate bodies, required architecture/research/contract/guidance/integration/validation
-documents, four implemented crate directories, workspace declaration, lockfile, integration
+documents, twenty implemented crate directories, workspace declaration, lockfile, integration
 test sources, and two animated SVG assets. Counts are minimums for this recovery contract;
 substantive review remains mandatory. Do not add filler to satisfy counts.
+
+## Updated authority — October 11 follow-up
+Nick explicitly requires at least 20 meaningful implemented workspace crates in every generated project. The canonical positive build instructions are in core-memory/docs/guidance/dream-machine-build-standard.md and surfaced by core-memory/AGENTS.md. This supersedes the initial four-crate floor.
 
 ## Execution order
 1. Select a substantive system and pin upstream ingredients.
