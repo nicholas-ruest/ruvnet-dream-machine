@@ -48,7 +48,7 @@ export function auditProject(root) {
     const dir = p.slice(0, -'Cargo.toml'.length);
     return /^\[package\]/m.test(text(p)) && files.some(f => f.startsWith(dir + 'src/') && f.endsWith('.rs') && text(f).trim().length > 100);
   });
-  if (crates.length < 4) failures.push('Requires at least 4 implemented crates; found ' + crates.length);
+  if (crates.length < 20) failures.push('Requires at least 20 implemented crates; found ' + crates.length);
   if (!files.includes('Cargo.toml') || !/^\[workspace\]/m.test(text('Cargo.toml'))) failures.push('Missing Cargo workspace');
   const svgs = files.filter(p => p.startsWith('docs/assets/') && p.endsWith('.svg') && /<animate\b|@keyframes/.test(text(p)));
   if (svgs.length < 2) failures.push('Requires 2 animated SVG assets; found ' + svgs.length);
