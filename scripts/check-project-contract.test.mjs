@@ -24,7 +24,7 @@ test('rejects the observed two-source-file single-crate regression', () => fixtu
   assert.equal(result.status, 'NONCOMPLIANT_BUILD');
   assert.equal(result.counts.adrs, 0);
   assert.equal(result.counts.ddds, 0);
-  assert.ok(result.failures.some(f => f.includes('4 implemented crates')));
+  assert.ok(result.failures.some(f => f.includes('20 implemented crates')));
 }));
 test('fails closed outside a Git checkout', () => {
   const root = mkdtempSync(join(tmpdir(), 'factory-no-git-'));
@@ -43,7 +43,7 @@ test('structural pass stays explicitly separate from completion; duplicates fail
     '# Context\n' + ('Domain fixture ' + i + ' ').repeat(40) + '\n## Language\n## Invariants\n');
   put('Cargo.toml', '[workspace]\nmembers=["crates/*"]');
   put('Cargo.lock', '# fixture');
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 20; i++) {
     put('crates/c' + i + '/Cargo.toml', '[package]\nname="c' + i + '"\nversion="0.1.0"');
     put('crates/c' + i + '/src/lib.rs', '// Fixture only\n'.repeat(12));
   }
