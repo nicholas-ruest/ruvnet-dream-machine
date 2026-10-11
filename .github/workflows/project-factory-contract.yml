@@ -1,0 +1,23 @@
+name: Project factory contract regression
+on:
+  pull_request:
+    paths:
+      - 'scripts/check-project-contract*'
+      - '.github/workflows/project-factory-contract.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check-project-contract*'
+      - '.github/workflows/project-factory-contract.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node --test scripts/check-project-contract.test.mjs
